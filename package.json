@@ -18,10 +18,10 @@
   },
   "homepage": "https://github.com/trueffelmafia/electron-api#readme",
   "peerDependencies": {
-    "@trueffelmafia/electron-types": "0.0.13"
+    "@trueffelmafia/electron-types": "^0.0.21"
   },
   "devDependencies": {
-    "@trueffelmafia/electron-types": "^0.0.15",
+    "@trueffelmafia/electron-types": "^0.0.21",
     "ts-loader": "9.4.4",
     "ts-node": "10.9.1",
     "tsconfig-paths-webpack-plugin": "4.1.0",
