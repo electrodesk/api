@@ -1,11 +1,12 @@
 {
   "name": "@trueffelmafia/electron-api",
-  "version": "0.0.3",
+  "version": "0.0.13",
   "description": "",
   "main": "bin/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --config ./.config/webpack.config.ts"
+    "build": "webpack --config ./.config/webpack.config.ts",
+    "scripts": "node ./bin/publish.mjs"
   },
   "repository": {
     "type": "git",
