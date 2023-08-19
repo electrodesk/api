@@ -1,35 +1,38 @@
-import type { Application, Command } from '@trueffelmafia/electron-types'
+import type { CommandResponse, CommandErrorResponse } from '@trueffelmafia/electron-types/core'
+import type { ApplicationReadDTO, CloseCommand, GetPropertyCommand, OpenCommand } from '@trueffelmafia/electron-types/application'
 import { final } from '../decorators/final'
 
 @final
 export class ApplicationService {
-
   /**
    * execute command to open application window
    */
-  static open<T = unknown>(payload: Application.OpenRequestParam<T>): Command.Response<Application.ApplicationDTO> {
-    const req: Application.OpenRequest<T> = {
+  static open<T>(application: string, data: T, asChild = false): CommandResponse<ApplicationReadDTO> | CommandErrorResponse {
+    const command: OpenCommand<T> = {
       command: 'application:open',
-      payload
+      application,
+      asChild,
+      data
     }
-    return window.tm_electron.exec(req)
+    return window.tm_electron.exec<ApplicationReadDTO>(command)
+  }
+
+  static getProperty<R = unknown>(property: keyof ApplicationReadDTO): CommandResponse<R> | CommandErrorResponse {
+    const command: GetPropertyCommand = {
+      command: 'application:get-property',
+      property
+    }
+    return window.tm_electron.exec<R>(command)
   }
 
   /**
    * execute command to close an application window
    */
-  static close(id: string): Command.Response<void> {
-    const request: Application.CloseRequest = {
+  static close(id?: string): CommandResponse<void> | CommandErrorResponse {
+    const command: CloseCommand = {
       command: 'application:close',
-      payload: { id }
+      id
     }
-    return window.tm_electron.exec(request)
-  }
-
-  static resolveState(): Command.Response<Application.State> {
-    const request: Application.StateRequest = {
-      command: 'application:state',
-    }
-    return window.tm_electron.exec<Application.State>(request)
+    return window.tm_electron.exec<void>(command)
   }
 }
