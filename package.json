@@ -5,7 +5,7 @@
   "main": "bin/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --config ./.config/webpack.config.ts"
+    "build": "webpack --config ./.config/webpack.config.js"
   },
   "repository": {
     "type": "git",
@@ -18,15 +18,15 @@
   },
   "homepage": "https://github.com/electrodesk/api#readme",
   "peerDependencies": {
-    "@electrodesk/electron-types": "0.0.1"
+    "@electrodesk/types": "0.0.1"
   },
   "devDependencies": {
-    "@electrodesk/electron-types": "0.0.1",
+    "@electrodesk/types": "0.0.1",
     "ts-loader": "9.4.4",
     "ts-node": "10.9.1",
     "tsconfig-paths-webpack-plugin": "4.1.0",
     "typescript": "5.1.6",
-    "webpack": "5.88.2",
+    "webpack": "^5.88.2",
     "webpack-cli": "5.1.4"
   }
 }

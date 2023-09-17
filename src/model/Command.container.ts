@@ -1,4 +1,4 @@
-import { CommandCompletedEvent } from "@electrodesk/electron-types/application"
+import { CommandCompletedEvent } from "@electrodesk/types/application"
 
 export class CommandContainer<P = unknown, R = unknown> {
 

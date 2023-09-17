@@ -1,5 +1,5 @@
-import type { CommandResponse, CommandErrorResponse } from '@electrodesk/electron-types/core'
-import type { ApplicationReadDTO, CloseCommand, GetPropertyCommand, OpenCommand } from '@electrodesk/electron-types/application'
+import type { CommandResponse, CommandErrorResponse } from '@electrodesk/types/core'
+import type { ApplicationReadDTO, CloseCommand, GetPropertyCommand, OpenCommand } from '@electrodesk/types/application'
 import { final } from '../decorators/final'
 
 @final
