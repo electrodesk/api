@@ -1,5 +1,5 @@
-import { ApplicationExecCommand, ApplicationReadDTO } from "@electrodesk/electron-types/application"
-import { CommandHandlerParam, ElectronEvent, EventHandlerParam } from "@electrodesk/electron-types/core"
+import { ApplicationExecCommand, ApplicationReadDTO } from "@electrodesk/types/application"
+import { CommandHandlerParam, ElectronEvent, EventHandlerParam } from "@electrodesk/types/core"
 import { final } from "../decorators/final"
 import { CommandContainer } from "../model/Command.container"
 
