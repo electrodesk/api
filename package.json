@@ -1,28 +1,27 @@
 {
-  "name": "@trueffelmafia/electron-api",
-  "version": "0.0.14",
+  "name": "@electrodesk/api",
+  "version": "0.0.1",
   "description": "",
   "main": "bin/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --config ./.config/webpack.config.ts",
-    "scripts": "node ./bin/publish.mjs"
+    "build": "webpack --config ./.config/webpack.config.ts"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/trueffelmafia/electron-api.git"
+    "url": "git+https://github.com/electrodesk/api.git"
   },
   "author": "Ralf Hannuschka",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/trueffelmafia/electron-api/issues"
+    "url": "https://github.com/electrodesk/api/issues"
   },
-  "homepage": "https://github.com/trueffelmafia/electron-api#readme",
+  "homepage": "https://github.com/electrodesk/api#readme",
   "peerDependencies": {
-    "@trueffelmafia/electron-types": "^0.0.33"
+    "@electrodesk/electron-types": "0.0.1"
   },
   "devDependencies": {
-    "@trueffelmafia/electron-types": "^0.0.33",
+    "@electrodesk/electron-types": "0.0.1",
     "ts-loader": "9.4.4",
     "ts-node": "10.9.1",
     "tsconfig-paths-webpack-plugin": "4.1.0",
