@@ -22,7 +22,7 @@ export class MessageService {
    * @description emit event through renderer process
    */
   dispatchEvent(event: ElectronEvent): void {
-    window.tm_electron.dispatchEvent(event)
+    window.electrodesk.dispatchEvent(event)
   }
 
   /**
@@ -38,7 +38,7 @@ export class MessageService {
         data: commandPayload
       }
     }
-    window.tm_electron.execCommand<T>(command)
+    window.electrodesk.execCommand<T>(command)
   }
 
   /**
@@ -46,7 +46,7 @@ export class MessageService {
    */
   attachCommandListener(command: string, listener: CommandListener): void {
     if (this.commandListenerRegistry.size === 0) {
-      window.tm_electron.addCommandHandler(this.handleCommand.bind(this))
+      window.electrodesk.addCommandHandler(this.handleCommand.bind(this))
     }
     this.attachListener(this.commandListenerRegistry, command, listener)
   }
@@ -60,7 +60,7 @@ export class MessageService {
   detachCommandListener(command: string, listener: CommandListener): void {
     this.detachListener(this.commandListenerRegistry, command, listener)
     if (this.commandListenerRegistry.size === 0) {
-      window.tm_electron.removeCommandHandler(this.handleCommand.bind(this))
+      window.electrodesk.removeCommandHandler(this.handleCommand.bind(this))
     }
   }
 
@@ -69,7 +69,7 @@ export class MessageService {
    */
   attachEventListener(event: string, listener: EventListener): void {
     if (this.eventListenerRegistry.size === 0) {
-      window.tm_electron.addEventHandler(this.handleEvent.bind(this))
+      window.electrodesk.addEventHandler(this.handleEvent.bind(this))
     }
     this.attachListener(this.eventListenerRegistry, event, listener)
   } 
@@ -80,7 +80,7 @@ export class MessageService {
   detachEventListener(event: string, listener: EventListener): void {
     this.detachListener(this.eventListenerRegistry, event, listener)
     if (this.eventListenerRegistry.size === 0) {
-      window.tm_electron.removeEventHandler(this.handleEvent.bind(this))
+      window.electrodesk.removeEventHandler(this.handleEvent.bind(this))
     }
   } 
 

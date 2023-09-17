@@ -28,7 +28,7 @@ export class CommandContainer<P = unknown, R = unknown> {
           data
         }
       }
-      window.tm_electron.dispatchEvent(event)
+      window.electrodesk.dispatchEvent(event)
       this.isCompleted = true
     }
   }

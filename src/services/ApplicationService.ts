@@ -15,7 +15,7 @@ export class ApplicationService {
       asChild,
       data
     }
-    return window.tm_electron.execCommand<ApplicationReadDTO>(command)
+    return window.electrodesk.execCommand<ApplicationReadDTO>(command)
   }
 
   getProperty<R = unknown>(property: keyof ApplicationReadDTO): CommandResponse<R> | CommandErrorResponse {
@@ -23,7 +23,7 @@ export class ApplicationService {
       command: 'application:get-property',
       property
     }
-    return window.tm_electron.execCommand<R>(command)
+    return window.electrodesk.execCommand<R>(command)
   }
 
   /**
@@ -34,6 +34,6 @@ export class ApplicationService {
       command: 'application:close',
       id
     }
-    return window.tm_electron.execCommand<void>(command)
+    return window.electrodesk.execCommand<void>(command)
   }
 }
