@@ -1,5 +1,5 @@
-import { ApplicationExecCommand, ApplicationReadDTO } from "@trueffelmafia/electron-types/application"
-import { CommandHandlerParam, ElectronEvent, EventHandlerParam } from "@trueffelmafia/electron-types/core"
+import { ApplicationExecCommand, ApplicationReadDTO } from "@electrodesk/electron-types/application"
+import { CommandHandlerParam, ElectronEvent, EventHandlerParam } from "@electrodesk/electron-types/core"
 import { final } from "../decorators/final"
 import { CommandContainer } from "../model/Command.container"
 
