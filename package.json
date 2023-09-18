@@ -1,11 +1,11 @@
 {
   "name": "@electrodesk/api",
-  "version": "0.0.1",
+  "version": "0.0.6",
   "description": "",
   "main": "bin/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --config ./.config/webpack.config.js"
+    "build": "webpack --config ./.config/webpack.config.ts"
   },
   "repository": {
     "type": "git",
@@ -18,15 +18,15 @@
   },
   "homepage": "https://github.com/electrodesk/api#readme",
   "peerDependencies": {
-    "@electrodesk/types": "0.0.1"
+    "@electrodesk/types": "0.0.2"
   },
   "devDependencies": {
-    "@electrodesk/types": "0.0.1",
+    "@electrodesk/types": "0.0.2",
     "ts-loader": "9.4.4",
     "ts-node": "10.9.1",
     "tsconfig-paths-webpack-plugin": "4.1.0",
     "typescript": "5.1.6",
-    "webpack": "^5.88.2",
+    "webpack": "5.88.2",
     "webpack-cli": "5.1.4"
   }
 }
