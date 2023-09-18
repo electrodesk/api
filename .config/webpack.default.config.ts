@@ -1,12 +1,11 @@
 /**
  * Base webpack config used across other specific configs
  */
-const webpack = require('webpack');
-const TsconfigPathsPlugins = require('tsconfig-paths-webpack-plugin')
-const webpackPaths = require('./webpack.paths')
-const path = require('path')
+import webpack from 'webpack';
+import TsconfigPathsPlugins from 'tsconfig-paths-webpack-plugin';
+import webpackPaths from './webpack.paths';
 
-const configuration = {
+const configuration: webpack.Configuration = {
   stats: 'errors-only',
 
   module: {
@@ -19,6 +18,13 @@ const configuration = {
         },
       },
     ],
+  },
+
+  output: {
+    // https://github.com/webpack/webpack/issues/1114
+    library: {
+      type: 'commonjs2',
+    },
   },
 
   /**
@@ -36,21 +42,6 @@ const configuration = {
       NODE_ENV: 'production',
     })
   ],
-
-  entry: {
-    api: path.join(webpackPaths.srcPath, 'index.ts')
-  },
-
-  output: {
-    path: path.join(webpackPaths.releasePath, 'bin'),
-    filename: 'index.js',
-    library: {
-      name: ['@tm-electron', '[name]'],
-      type: 'umd'
-    },
-  },
-
-  mode: 'production'
 };
 
-module.exports = configuration;
+export default configuration;

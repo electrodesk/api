@@ -8,7 +8,7 @@ export class ApplicationService {
   /**
    * execute command to open application window
    */
-  open<T>(application: string, data: T, asChild = false): CommandResponse<ApplicationReadDTO> | CommandErrorResponse {
+  open<T>(application: string, data: T, asChild = false): Promise<CommandResponse<ApplicationReadDTO> | CommandErrorResponse> {
     const command: OpenCommand<T> = {
       command: 'application:open',
       application,
@@ -18,7 +18,7 @@ export class ApplicationService {
     return window.electrodesk.execCommand<ApplicationReadDTO>(command)
   }
 
-  getProperty<R = unknown>(property: keyof ApplicationReadDTO): CommandResponse<R> | CommandErrorResponse {
+  getProperty<R = unknown>(property: keyof ApplicationReadDTO): Promise<CommandResponse<R> | CommandErrorResponse> {
     const command: GetPropertyCommand = {
       command: 'application:get-property',
       property
@@ -29,7 +29,7 @@ export class ApplicationService {
   /**
    * execute command to close an application window
    */
-  close(id?: string): CommandResponse<void> | CommandErrorResponse {
+  close(id?: string): Promise<CommandResponse<void> | CommandErrorResponse> {
     const command: CloseCommand = {
       command: 'application:close',
       id
