@@ -1,6 +1,6 @@
 {
   "name": "@electrodesk/api",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "",
   "main": "bin/index.js",
   "scripts": {
@@ -18,10 +18,10 @@
   },
   "homepage": "https://github.com/electrodesk/api#readme",
   "peerDependencies": {
-    "@electrodesk/types": "0.0.5"
+    "@electrodesk/types": "0.0.6"
   },
   "devDependencies": {
-    "@electrodesk/types": "0.0.5",
+    "@electrodesk/types": "0.0.6",
     "ts-loader": "9.4.4",
     "ts-node": "10.9.1",
     "tsconfig-paths-webpack-plugin": "4.1.0",
