@@ -1,5 +1,5 @@
 import type { CommandResponse, CommandErrorResponse } from '@electrodesk/types/core'
-import type { ApplicationReadDTO, CloseCommand, GetPropertyCommand, OpenCommand } from '@electrodesk/types/application'
+import type { ApplicationEntity, ApplicationListCommand, ApplicationReadDTO, CloseCommand, GetPropertyCommand, OpenCommand } from '@electrodesk/types/application'
 import { final } from '../decorators/final'
 
 @final
@@ -16,6 +16,19 @@ export class ApplicationService {
       data
     }
     return window.electrodesk.execCommand<ApplicationReadDTO>(command)
+  }
+
+  /**
+   * @description gets a list of all available applications
+   */
+  list(): Promise<CommandResponse<ApplicationEntity[]> | CommandErrorResponse> {
+    const command: ApplicationListCommand = {
+      command: 'application:list',
+      config: {
+        refresh: false
+      }
+    }
+    return window.electrodesk.execCommand<ApplicationEntity[]>(command)
   }
 
   getProperty<R = unknown>(property: keyof ApplicationReadDTO): Promise<CommandResponse<R> | CommandErrorResponse> {
