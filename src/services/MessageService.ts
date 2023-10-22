@@ -1,14 +1,7 @@
-<<<<<<< Updated upstream
-import { ApplicationExecCommand, ApplicationReadDTO } from "@electrodesk/types/application"
-import { CommandHandlerParam, ElectronEvent, EventHandlerParam } from "@electrodesk/types/core"
-import { final } from "../decorators/final"
-import { CommandContainer } from "../model/Command.container"
-=======
 import { ApplicationEvent } from "@electrodesk/types/application";
 import { CommandHandlerParam, ElectronEvent } from "@electrodesk/types/core";
 import { final } from "../decorators/final";
 import { CommandContainer } from "../model/Command.container";
->>>>>>> Stashed changes
 
 export declare type CommandListener = (command: CommandContainer) => void;
 export declare type EventListener = (payload: unknown, event: string) => void;
@@ -34,25 +27,6 @@ export class MessageService {
     window.electrodesk.dispatchEvent(event);
   }
 
-<<<<<<< Updated upstream
-  /**
-   * @description sends command to another application. Like open file or stop playing
-   * this video
-   */
-  exec<T = unknown>(application: ApplicationReadDTO['uuid'], commandName: string, commandPayload?: T): void {
-    const command: ApplicationExecCommand<T> = {
-      command: 'application:exec',
-      applicationId: application,
-      payload: {
-        command: commandName,
-        data: commandPayload
-      }
-    }
-    window.electrodesk.execCommand<T>(command)
-  }
-
-=======
->>>>>>> Stashed changes
   /**
    * attach listener to specific command
    */
