@@ -10,6 +10,10 @@ const configuration: webpack.Configuration = {
     api: path.join(webpackPaths.srcPath, 'index.ts')
   },
 
+  optimization: {
+    minimize: false
+  },
+
   output: {
     path: path.join(webpackPaths.releasePath, 'bin'),
     filename: 'index.js',

@@ -1,4 +1,3 @@
-import { ApplicationExecCommand, ApplicationReadDTO } from "@electrodesk/types/application"
 import { CommandHandlerParam, ElectronEvent, EventHandlerParam } from "@electrodesk/types/core"
 import { final } from "../decorators/final"
 import { CommandContainer } from "../model/Command.container"
@@ -19,27 +18,12 @@ export class MessageService {
   }
 
   /**
-   * @description emit event through renderer process
+   * @description emit event through renderer process das is rotz
    */
   dispatchEvent(event: ElectronEvent): void {
     window.electrodesk.dispatchEvent(event)
   }
 
-  /**
-   * @description sends command to another application. Like open file or stop playing
-   * this video
-   */
-  exec<T = unknown>(application: ApplicationReadDTO['uuid'], commandName: string, commandPayload?: T): void {
-    const command: ApplicationExecCommand<T> = {
-      command: 'application:exec',
-      applicationId: application,
-      payload: {
-        command: commandName,
-        data: commandPayload
-      }
-    }
-    window.electrodesk.execCommand<T>(command)
-  }
 
   /**
    * attach listener to specific command
@@ -65,7 +49,7 @@ export class MessageService {
   }
 
   /**
-   * attach listener to specific event
+   * @description lauschen auf einen Event der eingereicht wird. Wir bekommen einen Event.
    */
   attachEventListener(event: string, listener: EventListener): void {
     if (this.eventListenerRegistry.size === 0) {
@@ -130,6 +114,7 @@ export class MessageService {
     const listeners = this.eventListenerRegistry.get(param.event) ?? [];
     const globalListeners = this.eventListenerRegistry.get('*') ?? [];
     const combinedListeners = [...listeners, ...globalListeners];
+
     for (const listener of combinedListeners) {
       listener(param.payload, param.event)
     }

@@ -1,25 +1,35 @@
 import type { CommandResponse, CommandErrorResponse } from '@electrodesk/types/core'
-import type { ApplicationEntity, ApplicationListCommand, ApplicationReadDTO, CloseCommand, GetPropertyCommand, OpenCommand } from '@electrodesk/types/application'
+import type { ApplicationEntity, ApplicationListCommand, ApplicationReadDTO, GetPropertyCommand, OpenCommand } from '@electrodesk/types/application'
 import { final } from '../decorators/final'
+import { Application } from './Application.facade'
+
 
 @final
 export class ApplicationService {
 
   /**
-   * execute command to open application window
+   * @description Oeffnet eine Applikation und liefert eine Facadae zurueck ueber die mit der App
+   * kommmuniziert werden kann.
    */
-  open<T>(application: string, data: T, asChild = false): Promise<CommandResponse<ApplicationReadDTO> | CommandErrorResponse> {
+  open<T>(application: string, data: T, asChild = false): Promise<Application> {
     const command: OpenCommand<T> = {
       command: 'application:open',
       application,
       asChild,
       data
     }
+
     return window.electrodesk.execCommand<ApplicationReadDTO>(command)
+      .then((response: CommandResponse<ApplicationReadDTO> | CommandErrorResponse) => {
+        if (this.isErrorResponse(response)) {
+          throw response.error;
+        }
+        return new Application(response.data)
+      })
   }
 
   /**
-   * @description gets a list of all available applications
+   * @description Liefert eine Liste aller Applikationen wieder die aktuell offen sind
    */
   list(): Promise<CommandResponse<ApplicationEntity[]> | CommandErrorResponse> {
     const command: ApplicationListCommand = {
@@ -31,6 +41,14 @@ export class ApplicationService {
     return window.electrodesk.execCommand<ApplicationEntity[]>(command)
   }
 
+  /**
+   * @description Liefert eine Eigenschaft der Applikation wieder, in dem Falle immer
+   * die vom Sender selber, das bedeutet wir koennen nicht die Informationen von anderen Apps
+   * abgreifen sondern nur die von der App selber.
+   * 
+   * @param property
+   * @returns 
+   */
   getProperty<R = unknown>(property: keyof ApplicationReadDTO): Promise<CommandResponse<R> | CommandErrorResponse> {
     const command: GetPropertyCommand = {
       command: 'application:get-property',
@@ -39,14 +57,7 @@ export class ApplicationService {
     return window.electrodesk.execCommand<R>(command)
   }
 
-  /**
-   * execute command to close an application window
-   */
-  close(id?: string): Promise<CommandResponse<void> | CommandErrorResponse> {
-    const command: CloseCommand = {
-      command: 'application:close',
-      id
-    }
-    return window.electrodesk.execCommand<void>(command)
+  private isErrorResponse(response: CommandResponse | CommandErrorResponse): response is CommandErrorResponse {
+    return response.code !== 0;
   }
 }
