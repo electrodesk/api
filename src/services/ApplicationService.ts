@@ -18,6 +18,74 @@ import { Application } from "./Application.facade";
 
 @final
 export class ApplicationService {
+
+  /**
+   * @description close application
+   * @throws TimeoutException
+   */
+  close(id?: ApplicationReadDTO["uuid"]): void {
+    const command: ApplicationCloseCommand = {
+      command: "application:close",
+      id,
+    };
+    window.electrodesk.execCommand<void>(command);
+  }
+
+  /**
+   * @description Liefert eine Eigenschaft der Applikation wieder, in dem Falle immer
+   * die vom Sender selber, das bedeutet wir koennen nicht die Informationen von anderen Apps
+   * abgreifen sondern nur die von der App selber.
+   *
+   * @param property
+   * @returns
+   */
+  getProperty<R = unknown>(
+    property: keyof ApplicationReadDTO
+  ): Promise<CommandResponse<R> | CommandErrorResponse> {
+    const command: GetPropertyCommand = {
+      command: "application:get-property",
+      property,
+    };
+    return window.electrodesk.execCommand<R>(command);
+  }
+
+  /**
+   * @description return a list of all available applications
+   */
+  list(): Promise<CommandResponse<ApplicationEntity[]> | CommandErrorResponse> {
+    const command: ApplicationListCommand = {
+      command: "application:list",
+      config: {
+        refresh: false,
+      },
+    };
+    return window.electrodesk.execCommand<ApplicationEntity[]>(command);
+  }
+
+  /**
+   * @description Maximiert die Applikation
+   * @throws TimeoutException
+   */
+  maximize(id?: ApplicationReadDTO["uuid"]): void {
+    const command: ApplicationMaximizeCommand = {
+      command: "application:maximize",
+      id,
+    };
+    window.electrodesk.execCommand<void>(command);
+  }
+
+  /**
+   * @description Minimiert die Applikation
+   * @throws TimeoutException
+   */
+  minimize(id?: ApplicationReadDTO['uuid']): void {
+    const command: ApplicationMinimizeCommand = {
+      command: "application:minimize",
+      id
+    };
+    window.electrodesk.execCommand<void>(command);
+  }
+
   /**
    * @description open new application, if command succeeds it returns a facade so we can communicate and/or listen
    * to events to child window.
@@ -56,77 +124,14 @@ export class ApplicationService {
   }
 
   /**
-   * @description return a list of all available applications
-   */
-  list(): Promise<CommandResponse<ApplicationEntity[]> | CommandErrorResponse> {
-    const command: ApplicationListCommand = {
-      command: "application:list",
-      config: {
-        refresh: false,
-      },
-    };
-    return window.electrodesk.execCommand<ApplicationEntity[]>(command);
-  }
-
-  /**
-   * @description close application
-   * @throws TimeoutException
-   */
-  close(): Promise<CommandResponse<void> | CommandErrorResponse> {
-    const command: ApplicationCloseCommand = {
-      command: "application:close",
-    };
-    return window.electrodesk.execCommand<void>(command);
-  }
-
-  /**
-   * @description Maximiert die Applikation
-   * @throws TimeoutException
-   */
-  maximize(): void {
-    const command: ApplicationMaximizeCommand = {
-      command: "application:maximize",
-    };
-    window.electrodesk.execCommand<void>(command);
-  }
-
-  /**
-   * @description Minimiert die Applikation
-   * @throws TimeoutException
-   */
-  minimize(): void {
-    const command: ApplicationMinimizeCommand = {
-      command: "application:minimize",
-    };
-    window.electrodesk.execCommand<void>(command);
-  }
-
-  /**
    * @description restore application if minimized
    */
-  restore(): void {
+  restore(id?: ApplicationReadDTO['uuid']): void {
     const command: ApplicationRestoreCommand = {
-      command: "application:restore"
+      command: "application:restore",
+      id
     };
     window.electrodesk.execCommand<void>(command);
-  }
-
-  /**
-   * @description Liefert eine Eigenschaft der Applikation wieder, in dem Falle immer
-   * die vom Sender selber, das bedeutet wir koennen nicht die Informationen von anderen Apps
-   * abgreifen sondern nur die von der App selber.
-   *
-   * @param property
-   * @returns
-   */
-  getProperty<R = unknown>(
-    property: keyof ApplicationReadDTO
-  ): Promise<CommandResponse<R> | CommandErrorResponse> {
-    const command: GetPropertyCommand = {
-      command: "application:get-property",
-      property,
-    };
-    return window.electrodesk.execCommand<R>(command);
   }
 
   private isErrorResponse(

@@ -1,14 +1,10 @@
 import {
-  ApplicationCloseCommand,
   ApplicationClosedEvent,
   ApplicationEvent,
   ApplicationExecCommand,
-  ApplicationMaximizeCommand,
-  ApplicationMinimizeCommand,
   ApplicationReadDTO,
   ApplicationRegisterListenerCommand,
   ApplicationRemoveListenerCommand,
-  ApplicationRestoreCommand,
 } from "@electrodesk/types/application";
 import { CommandErrorResponse, CommandResponse } from "@electrodesk/types/core"; // prettier-ignore
 
@@ -21,16 +17,8 @@ export class Application {
 
   constructor(private readonly application: ApplicationReadDTO) {}
 
-  /**
-   * @description close application
-   * @throws TimeoutException
-   */
-  close(): Promise<CommandResponse<void> | CommandErrorResponse> {
-    const command: ApplicationCloseCommand = {
-      command: "application:close",
-      id: this.application.uuid,
-    };
-    return window.electrodesk.execCommand<void>(command);
+  get id(): ApplicationReadDTO['uuid'] {
+    return this.application.uuid;
   }
 
   /**
@@ -50,30 +38,6 @@ export class Application {
       },
     };
     window.electrodesk.execCommand<TResponse>(command);
-  }
-
-  /**
-   * @description Maximiert die Applikation
-   * @throws TimeoutException
-   */
-  maximize(): void {
-    const command: ApplicationMaximizeCommand = {
-      command: "application:maximize",
-      id: this.application.uuid
-    };
-    window.electrodesk.execCommand<void>(command);
-  }
-
-  /**
-   * @description Minimiert die Applikation
-   * @throws TimeoutException
-   */
-  minimize(): void {
-    const command: ApplicationMinimizeCommand = {
-      command: "application:minimize",
-      id: this.application.uuid
-    };
-    window.electrodesk.execCommand<void>(command);
   }
 
   /**
@@ -124,17 +88,6 @@ export class Application {
     }
 
     this.clearAllEvents();
-  }
-
-  /**
-   * @description restore application if minimized
-   */
-  restore(): void {
-    const command: ApplicationRestoreCommand = {
-      command: "application:restore",
-      id: this.application.uuid
-    };
-    window.electrodesk.execCommand<void>(command);
   }
 
   /**
