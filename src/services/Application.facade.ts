@@ -1,5 +1,16 @@
-import { ApplicationReadDTO, CloseCommand, ApplicationExecCommand, ApplicationRegisterListenerCommand, ApplicationRemoveListenerCommand, ApplicationEvent, ApplicationClosedEvent, } from "@electrodesk/types/application"; // prettier-ignore
-import { CommandResponse, CommandErrorResponse } from "@electrodesk/types/core"; // prettier-ignore
+import {
+  ApplicationCloseCommand,
+  ApplicationClosedEvent,
+  ApplicationEvent,
+  ApplicationExecCommand,
+  ApplicationMaximizeCommand,
+  ApplicationMinimizeCommand,
+  ApplicationReadDTO,
+  ApplicationRegisterListenerCommand,
+  ApplicationRemoveListenerCommand,
+  ApplicationRestoreCommand,
+} from "@electrodesk/types/application";
+import { CommandErrorResponse, CommandResponse } from "@electrodesk/types/core"; // prettier-ignore
 
 export declare type EventListener = (event: ApplicationEvent) => void;
 
@@ -15,7 +26,7 @@ export class Application {
    * @throws TimeoutException
    */
   close(): Promise<CommandResponse<void> | CommandErrorResponse> {
-    const command: CloseCommand = {
+    const command: ApplicationCloseCommand = {
       command: "application:close",
       id: this.application.uuid,
     };
@@ -46,7 +57,11 @@ export class Application {
    * @throws TimeoutException
    */
   maximize(): void {
-    throw new Error(`todo implement`);
+    const command: ApplicationMaximizeCommand = {
+      command: "application:maximize",
+      id: this.application.uuid
+    };
+    window.electrodesk.execCommand<void>(command);
   }
 
   /**
@@ -54,7 +69,11 @@ export class Application {
    * @throws TimeoutException
    */
   minimize(): void {
-    throw new Error(`todo implement`);
+    const command: ApplicationMinimizeCommand = {
+      command: "application:minimize",
+      id: this.application.uuid
+    };
+    window.electrodesk.execCommand<void>(command);
   }
 
   /**
@@ -94,7 +113,7 @@ export class Application {
       return;
     }
 
-    /** 
+    /**
      * check eventregistry size is greater then 1, we have to do this
      * since we added our own application-close event to get notified
      * app has been closed.
@@ -105,6 +124,17 @@ export class Application {
     }
 
     this.clearAllEvents();
+  }
+
+  /**
+   * @description restore application if minimized
+   */
+  restore(): void {
+    const command: ApplicationRestoreCommand = {
+      command: "application:restore",
+      id: this.application.uuid
+    };
+    window.electrodesk.execCommand<void>(command);
   }
 
   /**
@@ -130,7 +160,10 @@ export class Application {
     const eventHandler = this.eventRegistry.get(event.name);
     if (!eventHandler) return;
 
-    if (event.sender !== 'APPLICATION' || event.senderId !== this.application.uuid) {
+    if (
+      event.sender !== "APPLICATION" ||
+      event.senderId !== this.application.uuid
+    ) {
       return;
     }
 
