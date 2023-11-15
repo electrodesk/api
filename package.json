@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "@electrodesk/types": "^0.0.19",
-    "ts-loader": "9.5.0",
+    "ts-loader": "9.5.1",
     "ts-node": "10.9.1",
     "tsconfig-paths-webpack-plugin": "4.1.0",
     "typescript": "5.2.2",
